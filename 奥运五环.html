@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>奥运五环</title>
+    <style>
+        .cycle,.cycle::after{
+            height:100px;
+            width:100px;
+            border-radius:50%;
+            border:1px solid;
+            position:absolute;
+        }
+        .cycle::after{
+            content:'';
+            top:-1px;
+            left:-1px;
+        }
+        .blue{
+            border-color:blue;
+            position:absolute;
+            top:10px;
+            left:10px;
+        }
+        .blue.cycle::after{
+            border-color:blue;
+            z-index:1;
+            border-bottom:transparent;
+        }
+        .red{
+            border-color:red;
+            position:absolute;
+            top:10px;
+            left:120px;
+        }
+        .red.cycle::after{
+            border-color:red;
+            z-index: 1;
+            border-left: transparent;
+        }
+        .green{
+            border-color:green;
+            position:absolute;
+            top:10px;
+            left:230px;
+        }
+        .green.cycle::after{
+            border-color:green;
+            z-index: 2;
+            border-bottom: transparent;
+        }
+        .black{
+            border-color:black;
+            position:absolute;
+            top:60px;
+            left:60px;
+        }
+        .black.cycle::after{
+            border-color:black;
+        }
+        .yellow{
+            border-color:yellow;
+            position:absolute;
+            top:61px;
+            left:170px;
+        }
+        .yellow.cycle::after{
+            border-color:yellow;
+            z-index:1;
+            border-top: transparent;
+        }
+    </style>
+</head>
+<body>
+<div class="cycle blue"></div>
+<div class="cycle red"></div>
+<div class="cycle green"></div>
+<div class="cycle black"></div>
+<div class="cycle yellow"></div>
+</body>
+</html>
