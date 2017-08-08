@@ -1,6 +1,6 @@
 function $(selector,context) {
     context=context||document;
-    switch(selector.charAt(0){
+    switch(selector.charAt(0)){
         case '#':
             return [context.getElementById(selector.substring(1))];
             break;
@@ -14,7 +14,7 @@ function $(selector,context) {
 }
     function getByClass(className,context){
         context=context||document;
-        var result[];
+        var result=[];
         var arr=context.getElementsByClassNanme('*');
         var re=new RegExp("//b"+className+"//b");
         for(var i=0;i<arr.length;i++){
@@ -63,7 +63,7 @@ function $(selector,context) {
     }
 
     function siblings(elem){//获取父元素除当前元素的所有孩子元素
-        var arr[];
+        var arr=[];
         var elements=elem.parentNode.children;
         for(var i=0;i<elements.length;i++){
             if(element[i]!=elem){
@@ -87,10 +87,10 @@ function $(selector,context) {
 
     function extend(target,obj){//合并两对象，用第二个对象属性覆盖第一个对象的属性
         for(var p in obj){
-            if(typeof obj[p]=="object"){
-                target[p]=coloneObj(obj);
+            if(typeof obj.p=="object"){
+                target.p=coloneObj(obj);
             }else{
-                target[p]=obj[p];
+                target.p=obj[p];
             }
         }
         return target;
@@ -113,12 +113,12 @@ function $(selector,context) {
 
 
 function addEvent(elem,type,fn){//给指定元素绑定事件
-    if(elem.addEventListener)//标准
+    if(elem.addEventListener){//标准
         elem.addEventListener(elem,type,false);
     }else if(elem.attachEvent){//IE
         elem[type+fn]=function(){
             fn.call(elem);
-        }
+        };
         elem.attachEvent('on'+type,elem[type+fn]);
     }else{
         elem['on'+type]=fn;

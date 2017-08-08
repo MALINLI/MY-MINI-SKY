@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>轮播图</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+        #container{
+            width:520px;
+            height:280px;
+            position:relative;
+            margin:100px auto;
+        }
+        li{
+            list-style: none;;
+        }
+        img{
+            border:0;
+        }
+        #imgs img{
+            display:none;
+        }
+        #imgs .selected{
+            display:block;
+        }
+        #nav li,#arrows span{
+            width:20px;
+            height:20px;
+            background:#000000;
+            color:#fff;
+            text-align:center;
+            line-height:20px;
+            float:left;
+            margin-right:5px;
+            cursor:pointer;
+        }
+        #nav{
+            position:absolute;
+            right:10px;
+            bottom:10px;
+        }
+        #nav .selected{
+          background:orange;
+        }
+        #arrows{
+            position:absolute;
+            left:10px;
+            bottom:2px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="imgs">
+            <img class="selected" src="img/1.jpg" alt=""/>
+            <img src="img/2.jpg" alt=""/>
+            <img src="img/3.jpg" alt=""/>
+            <img src="img/4.jpg" alt=""/>
+        </div>
+        <div id="arrows">
+            <span id="right">&lt;</span><span id="left">&gt;</span>
+        </div>
+        <ul id="nav">
+            <li class="selected">1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+        </ul>
+    </div>
+    <script src="../jQuery/jquery-1.11.2.js"></script>
+    <script>
+        $(function(){
+            var nowIndex=0;
+            var $lis=$('#nav li');
+            var $imgs=$('#imgs img');
+            $lis.on("mouseover",function(){
+                nowIndex=$(this).index();
+                $lis.eq(nowIndex).addClass('selected').siblings().removeClass('selected');
+                $imgs.eq(nowIndex).addClass('selected').siblings().removeClass('selected');
+            });
+            $('#arrows span').on('click',function(){
+                if($(this).attr('id')=='left'){
+                    nowIndex--;
+                    if(nowIndex==-1){
+                        nowIndex=$lis.length-1;
+                    }
+                }else{
+                    nowIndex++;
+                    if(nowIndex==$lis.length){
+                        nowIndex=0;
+                    }
+                }
+                $lis.eq(nowIndex).addClass('selected').siblings().removeClass('selected');
+                $imgs.eq(nowIndex).addClass('selected').siblings().removeClass('selected');
+            });
+            var timer=setInterval(function(){
+                $('#right').trigger('click');
+            },1000);
+            $('#container').hover(function(){//hover:将两个事件元素绑定到鼠标进入和离开元素时被执行
+                clearInterval(timer);
+            },function(){
+                timer=setInterval(function(){
+                    $('#right').trigger('click');
+                },1000);
+            });
+        });
+    </script>
+</body>
+</html>
