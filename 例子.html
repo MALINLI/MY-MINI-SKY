@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <title></title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+        li {
+            line-height:50px;
+            margin-bottom:5px;
+            list-style: none;
+            background: #ccc;
+            height:50px;
+            margin-top: 10px;
+            cursor:pointer;
+        }
+        #app {
+            margin: 150px auto;
+            width: 350px;
+        }
+        h2 {
+            text-align: center;
+        }
+        .p-price{
+            float:right;
+        }
+        .red{
+            background:red;
+        }
+        button{
+            margin-top:1px;
+        }
+        #del{
+            color:#fff;
+            font-weight:1000;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+       <h2>{{msg}}</h2>
+        <hr/>
+        <div>
+            <label>
+                名称：<input type="text"  placeholder="请输入商品名称" v-model="product"/>
+            </label>
+            <label>
+                价格：<input type="text" placeholder="0" v-model="price"/>
+            </label>
+            <button @click="add()">添加</button>
+            <label>
+                <input type="text" placeholder="请输入关键字" v-model="keyword"/>
+            </label>
+            <button @click="search()">查询</button>
+        </div>
+        <ul>
+            <li v-for="(p,index) in productList" :class="{red:p.isRed}" @click="select(p)">
+                <input type="checkbox" @click.stop="" v-model="checked" :value="index"/>
+                <span id="del" @click.stop="cutOff(index,p)">[&times]</span>
+                <span class="p-product">{{p.product}}</span>
+                <span class="p-price">{{p.price}}</span>
+            </li>
+        </ul>
+        <button @click="delAll()">删除选中</button>
+
+        <span id="total-price">总价：{{sum()}}元</span>
+    </div>
+
+    <script src="vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el:"#app",
+            data: {
+                msg: "todolist",
+                productList: [
+                    {
+                        product: '产品1',
+                        price: 123,
+                        isRed:false
+                    }, {
+                        product: '产品2',
+                        price: 12,
+                        isRed:false
+                    }, {
+                        product: '产品3',
+                        price: 33,
+                        isRed:false
+                    }, {
+                        product: '产品4',
+                        price: 234,
+                        isRed:false
+                    }, {
+                        product: '产品5',
+                        price: 543,
+                        isRed:false
+                    }
+                ],
+                product:"",
+                price:0,
+                keyword:'',
+                checked:[]
+            },
+            methods: {
+                sum(){
+                    let sum=0;
+                    this.productList.forEach(function(val,idx){
+                        if(val.isRed){
+                            sum+=parseInt(val.price);
+                        }
+                    });
+                return sum;
+                },
+                select(p){
+                    p.isRed = !p.isRed;
+//                    if(p.isRed){
+//                        this.totalPrice += p.price;
+//                    }else{
+//                        this.totalPrice -= p.price;
+//                    }
+                    this.sum();
+                  },
+                add(){
+                    this.productList.push({
+                        product:this.product,
+                        price:this.price,
+                        isRed:false
+                    });
+                    this.product="";
+                    this.price=0;
+                  },
+                search(){
+                    let arr=this.productList.filter((val,key)=>{
+                                if(val.product.includes(this.keyword)){
+                                    return val;
+                                }
+                    });
+                    this.productList=arr;
+                },
+                cutOff(index,p){
+                    this.productList.splice(index,1);
+                 },
+                delAll(){
+                    let arr=this.productList.filter((val,idx)=> {
+                            if(!this.checked.includes(idx)){
+                                return val;
+                            }
+                    });
+                    this.productList=arr;
+                    this.checked=[];
+                }
+             }
+        });
+    </script>
+</body>
+</html>
